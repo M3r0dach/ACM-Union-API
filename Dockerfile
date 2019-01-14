@@ -15,5 +15,7 @@ COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
 RUN gem install bundler
+RUN gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
+RUN bundle config mirror.https://gems.ruby-china.org https://gems.ruby-china.com
 RUN bundle install
 COPY . .
