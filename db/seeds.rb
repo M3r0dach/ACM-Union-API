@@ -11,7 +11,16 @@ if User.count == 0
       display_name: '彭潇',
       nickname: 'Rayn',
       gender: true,
-      role: 1,
+      role: 4,
+      status: 1,
+      password: '123456'
+    },
+    {
+      display_name: '陈啸宇',
+      nickname: "time_mage",
+      gender: true,
+      role: 4,
+      status: 1,
       password: '123456'
     },
     {

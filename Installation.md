@@ -28,11 +28,9 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 ## 初始化数据
 ```
-docker stop acmunionapi_spider_1
 docker exec -it acmunionapi_app_1 /bin/bash
 > rake db:reset
 > exit
-docker start acmunionapi_spider_1
 ```
 ## 一些重要文件和配置项的说明
 > 一些文件可以用git diff 对新旧版本进行对比理解
