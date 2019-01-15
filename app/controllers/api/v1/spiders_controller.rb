@@ -18,6 +18,7 @@ class Api::V1::SpidersController < ApplicationController
       render json: { error_code: 1, message: '账号已存在' } and return
     end
     @account = Account.new(account_params)
+    @account[:user_id] = current_user.id
     if @account.save!
       render json: @account
     else

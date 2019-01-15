@@ -10,3 +10,9 @@ ACM 校队综合平台 统一接口
 * Kaminari
 * CarrierWave
 * JsonWebToken (JWT)
+
+### TODO
+[] 新闻页面
+[] 首页页面
+[] 荣誉墙页面
+[] markdown显示问题
