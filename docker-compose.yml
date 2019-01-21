@@ -28,6 +28,8 @@ services:
     depends_on:
       - db
       - redis
+    volumes:
+      - ../ACM-Spider:/Code
     
   redis:
     build:
