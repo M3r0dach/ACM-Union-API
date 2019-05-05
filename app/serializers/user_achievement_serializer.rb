@@ -9,5 +9,6 @@ class UserAchievementSerializer < ActiveModel::Serializer
   end
 
   belongs_to :achievement
+  belongs_to :user
   
 end

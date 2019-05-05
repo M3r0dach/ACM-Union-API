@@ -9,6 +9,8 @@ module AchieveCenter
     end
 
     def run
+      p AchieveCenter.redis.keys
+      p AchieveCenter.redis.llen(AchieveCenter.mq_key)
       return false if AchieveCenter.redis.llen(AchieveCenter.mq_key) == 0
       begin
         return_value = AchieveCenter.redis.brpop(AchieveCenter.mq_key)

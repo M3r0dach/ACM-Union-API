@@ -23,6 +23,7 @@ Thread.new do
     while true
       process = $achieve_center_client.run
       if !process
+        p 'sleep it'
         sleep(3)
       end
     end

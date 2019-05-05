@@ -17,6 +17,7 @@
 .byebug_history
 
 .idea/
+.vscode/
 config/database.yml
 .DS_Store
 public/uploads/
