@@ -18,8 +18,9 @@ class Api::V1::MiscController < ApplicationController
   end
 
   def statistic
-    @solutions = Article.solution.where(user_id: current_user.id)
-    @submits = Submit.where(user_id: current_user.id)
+    @id = params[:id]
+    @solutions = Article.solution.where(user_id: @id)
+    @submits = Submit.where(user_id: @id)
     render json: {
       error_code: 0,
       data: [
@@ -41,7 +42,7 @@ class Api::V1::MiscController < ApplicationController
         },
         {
           name: '解题 Accept',
-          count: Submit.user_accepted(current_user.id).count,
+          count: Submit.user_accepted(@id).count,
         }
       ]
     }

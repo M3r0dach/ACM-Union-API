@@ -59,7 +59,7 @@ Rails.application.routes.draw do
 
       # misc
       get     '/misc/dashboard',              to: 'misc#dashboard'
-      get     '/misc/statistic',              to: 'misc#statistic'
+      get     '/misc/statistic/:id',              to: 'misc#statistic'
 
       # achievements
       get     '/comments',                    to: 'comments#index'
