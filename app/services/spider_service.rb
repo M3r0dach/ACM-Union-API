@@ -51,6 +51,34 @@ class SpiderService
       [rank_list, meta]
     end
 
+    def get_statistic(submits)
+      accepted = submits.where(result: ['AC', 'OK', 'Accepted'])
+      submitted_count = submits.group('user_name', 'user_id').count
+      accepted_count = accepted.group('user_name', 'user_id').count
+      statistic = submitted_count.map do |k,v|
+        accepted = if accepted_count.include?(k)
+          accepted_count[k]
+        else
+          0
+        end
+        {user_name: k[0], user_id: k[1], submitted: v, solved: accepted}
+      end
+      statistic.sort_by! do |x|
+        -x[:solved]
+      end
+      statistic.each_with_index.map do |k, idx|
+        k[:order] = idx+1
+        k
+      end
+    end
+
+    def get_week_rank
+      this_week = Submit.where("YEARWEEK(date_format(submitted_at, '%Y-%m-%d'))=YEARWEEK(now())")
+      last_week = Submit.where("YEARWEEK(date_format(submitted_at, '%Y-%m-%d'))=YEARWEEK(now())-1")
+      this_week = get_statistic this_week
+      last_week = get_statistic last_week
+      return [this_week, last_week]
+    end
   end
 
 end

@@ -55,34 +55,7 @@ class Api::V1::SpidersController < ApplicationController
     render json: @submits, root: 'items', meta: meta_with_page(@submits)
   end
 
-  def get_statistic(submits)
-    accepted = submits.where(result: ['AC', 'OK', 'Accepted'])
-    submitted_count = submits.group('user_name', 'user_id').count
-    accepted_count = accepted.group('user_name', 'user_id').count
-    statistic = submitted_count.map do |k,v|
-      accepted = if accepted_count.include?(k)
-        accepted_count[k]
-      else
-        0
-      end
-      {user_name: k[0], user_id: k[1], submitted: v, solved: accepted}
-    end
-    statistic.sort_by! do |x|
-      -x[:solved]
-    end
-    statistic.each_with_index.map do |k, idx|
-      k[:order] = idx+1
-      k
-    end
-  end
 
-  def week_rank
-    this_week = Submit.where("YEARWEEK(date_format(submitted_at, '%Y-%m-%d'))=YEARWEEK(now())")
-    last_week = Submit.where("YEARWEEK(date_format(submitted_at, '%Y-%m-%d'))=YEARWEEK(now())-1")
-    this_week = get_statistic this_week
-    last_week = get_statistic last_week
-    render json: {this_week: this_week, last_week: last_week}
-  end
 
   def workers
     @workers = SpiderService.get_open_spider_workers
@@ -108,7 +81,8 @@ class Api::V1::SpidersController < ApplicationController
     optional! :per, default: 15, values: 10..30
 
     @rank_list, @meta = SpiderService.get_rank_list(params[:page], params[:per])
-    render json: {items: @rank_list, meta: @meta}
+    @this_week, @last_week = SpiderService.get_week_rank
+    render json: {items: @rank_list, meta: @meta, this_week: @this_week, last_week: @last_week}
   end
 
   private
